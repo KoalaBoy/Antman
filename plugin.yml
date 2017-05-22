@@ -1,0 +1,9 @@
+name: Antman
+version: 1.1
+main: KoalaBoy\Antman\Antman
+api: [2.1.0]
+author: KoalaBoy
+
+permission:
+  antman: 
+    default: op
