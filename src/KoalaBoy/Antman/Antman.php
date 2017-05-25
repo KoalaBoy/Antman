@@ -45,7 +45,7 @@ class Cmd extends Command{
                         $g->setDataProperty(Entity::DATA_SCALE, Entity::DATA_TYPE_FLOAT, 1);
                         $g->sendMessage("§c» Antman turn off");
                     }else{
-                        $g->sendMessage("§a» Antman turn on");
+                        $g->sendMessage("§c» Use /antman <on:off>");
                     }
                 }else{
                     $g->sendMessage("§c» Use /antman <on:off>");
