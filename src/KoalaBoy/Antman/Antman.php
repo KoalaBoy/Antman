@@ -8,49 +8,69 @@ use pocketmine\entity\Entity;
 use pocketmine\{Server, Player};
 
 class Antman extends PluginBase{
-    
-    public $b = array();
+	
     public function onEnable(){
-        $this->getLogger()->info("§6» Antman v1.1 by KoalaBoy");
-        $this->getServer()->getCommandMap()->register("antman", new Cmd($this));
+        $this->getLogger()->info("§6» Antman v2.0.0 by KoalaBoy");
     }
     
-    public function respawn(PlayerRespawnEvent $e){
-        $o = $e->getPlayer();
-        if(!empty($this->b[$o->getName()])){
-            $size = $this->b[$o->getName()];
-            $o->setDataProperty(Entity::DATA_SCALE, Entity::DATA_TYPE_FLOAT, $size);
-        }
-    }
-}
-
-class Cmd extends Command{
-    
-    private $p;
-    public function __construct($plugin){
-        $this->p = $plugin;
-        parent::__construct("antman", "Antman by KoalaBoy");
-    }
-    
-    public function execute(CommandSender $g, $label, array $args){
-        if($g->hasPermission("antman")){
-            if(isset($args[0])){
-                if($args[0] == "on"){
-                    $this->p->b[$g->getName()] = $args[0];
-                    $g->setDataProperty(Entity::DATA_SCALE, Entity::DATA_TYPE_FLOAT, 0.2);
-                    $g->sendMessage("§a» Antman turn on");
-                }elseif($args[0] == "off"){
-                    if(!empty($this->p->b[$g->getName()])){
-                        unset($this->p->b[$g->getName()]);
-                        $g->setDataProperty(Entity::DATA_SCALE, Entity::DATA_TYPE_FLOAT, 1);
-                        $g->sendMessage("§c» Antman turn off");
+   public function onCommand(CommandSender $sender, Command $cmd, $label, array $args) {
+        if($sender instanceof Player) {
+            switch ($cmd->getName()) {
+                case "antman":
+                    if(empty($args[0])) {
+                    	if($sender->hasPermission("antman")) {
+                        $sender->sendMessage("§bAntman Commands :");
+                        $sender->sendMessage("§e/antman <antman:ant> Make you become Ant-Man.");
+                        $sender->sendMessage("§e/antman <giantman:giant> Make you become Giant-Man.");
+                        $sender->sendMessage("§e/antman <wasp> Make you become Wasp.");
+                        $sender->sendMessage("§7/antman <normal:reset> Back to normal size.");
                     }else{
-                        $g->sendMessage("§c» Use /antman <on:off>");
+                 	   $sender->sendMessage("§c» You don't have permission to use this command.");
                     }
-                }else{
-                    $g->sendMessage("§c» Use /antman <on:off>");
-                }
-            }
-        }
+                    break;
+                 }
+                    switch (strtolower($args[0])) {
+                        case "antman":
+                        case "ant":
+                            if($sender->hasPermission("antman")) {
+                                $sender->sendMessage("§a» You become Ant-Man!");
+								$sender->setDataProperty(Entity::DATA_SCALE, Entity::DATA_TYPE_FLOAT, 0.2);
+								$sender->setAllowFlight(false);
+                            }else{
+                            	$sender->sendMessage("§c» You don't have permission to use this command.");
+                                     }
+                            break;
+                        case "giant":
+                        case "giantman":
+                            if($sender->hasPermission("antman")) {
+                                $sender->sendMessage("§a» You become Giant-Man!");
+								$sender->setDataProperty(Entity::DATA_SCALE, Entity::DATA_TYPE_FLOAT, 10);
+								$sender->setAllowFlight(false);
+                            }else{
+                            	$sender->sendMessage("§c» You don't have permission to use this command.");
+                                     }
+                            break;
+                        case "wasp":
+                            if($sender->hasPermission("antman")) {
+                                $sender->sendMessage("§6» You become Wasp!");
+								$sender->setDataProperty(Entity::DATA_SCALE, Entity::DATA_TYPE_FLOAT, 0.2);
+								$sender->setAllowFlight(true);
+                            }else{
+                            	$sender->sendMessage("§c» You don't have permission to use this command.");
+                                     }
+                            break;
+					    case "normal":
+					    case "reset":
+                            if($sender->hasPermission("antman")) {
+                                $sender->sendMessage("§c» Now you are normal size!");
+								$sender->setDataProperty(Entity::DATA_SCALE, Entity::DATA_TYPE_FLOAT, 1);
+								$sender->setAllowFlight(false);
+                            }else{
+                            	$sender->sendMessage("§c» You don't have permission to use this command.");
+                                     }
+                            break;
+                }	
+			}
+		}
     }
 }
