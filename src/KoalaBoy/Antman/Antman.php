@@ -23,7 +23,7 @@ class Antman extends PluginBase{
                         $sender->sendMessage("§e/antman <antman:ant> Make you become Ant-Man.");
                         $sender->sendMessage("§e/antman <giantman:giant> Make you become Giant-Man.");
                         $sender->sendMessage("§e/antman <wasp> Make you become Wasp.");
-                        $sender->sendMessage("§7/antman <normal:reset> Back to normal size.");
+                        $sender->sendMessage("§e/antman <normal:reset> Back to normal size.");
                     }else{
                  	   $sender->sendMessage("§c» You don't have permission to use this command.");
                     }
